@@ -11,18 +11,18 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt-get update && \
     apt-get upgrade -y && \
     apt-get install -y \
-    gfortran \
-    csh \
-    gdb \
-    make \
-    wget \
-    unzip \
-    pip \
-    vim \
-    x11-apps \
-    libcfitsio-dev \
-    libpng-dev \
-    libx11-dev \
+    gfortran=4:10.2.1-1 \
+    csh=20110502-6 \
+    gdb=10.1-1.7 \
+    make=4.3-4.1 \
+    wget=1.21-1+deb11u2 \
+    unzip=6.0-26+deb11u1 \
+    python3-pip=20.3.4-4+deb11u1 \
+    vim=2:8.2.2434-3+deb11u3 \
+    x11-apps=7.7+8 \
+    libcfitsio-dev=3.490-3  \
+    libpng-dev=1.6.37-3 \
+    libx11-dev=2:1.7.2-1+deb11u2 \
     && rm -rf /var/lib/apt/lists/*
 
 # Download PGPlot (dependency of vpfit)
@@ -97,8 +97,8 @@ RUN gdown https://drive.google.com/uc?id=1kgCv7vxVhFK_87KIrcnICTexz3jIL8z_ \
     }' makefile \
     # execute the makefile
     && make vpflx \
-    # Add an alias to the vpfit executable so it can be run from anywhere
-    && echo "alias vpfit='/vpfit12.4/vpfit'" >> /etc/bash.bashrc
+    # Create a symlink to the vpfit executable so it can be run from anywhere
+    && ln -sf /vpfit12.4/vpfit /usr/local/bin/vpfit
 
 # set the working directory to the mount point where the data directory is mounted to
 WORKDIR /mnt/
