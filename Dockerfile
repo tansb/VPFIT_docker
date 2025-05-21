@@ -90,19 +90,18 @@ RUN gdown https://drive.google.com/uc?id=1kgCv7vxVhFK_87KIrcnICTexz3jIL8z_ \
     # fix the linker to tell it where pgplot is installed
     && sed -i 's|-lpgplot|-L/usr/local/pgplot -lpgplot|g' makefile \
     # Add missing libraries
-    # need to add -lpthread -lz  to line 116 (update linkers)
+    # need to add -lpthread -lz  to line 116 to update linkers. The below line
+    # just adds -lpthread -lz to the vpflx: call.
     && sed -i '/^vpflx: vpgti.o/,/\/usr\/lib\/gcc\/x86_64-redhat-linux\/3.4.6\// { \
     /\/usr\/lib\/gcc\/x86_64-redhat-linux\/3.4.6\// s|$| -lpthread -lz| \
-  }' makefile
+    }' makefile \
+    # execute the makefile
+    && make vpflx \
+    # Add an alias to the vpfit executable so it can be run from anywhere
+    && echo "alias vpfit='/vpfit12.4/vpfit'" >> /etc/bash.bashrc
 
-    #vpflx: vpgti.o $(vpobj)
-	#$(LINK.f) -o vpfit vpgti.o $(vpobj) $(cfitsx) \
-    #    -L/opt/ioa/lib -L/usr/local/pgplot -lpgplot -lX11 \
-    #    -L/usr/lib/gcc/x86_64-redhat-linux/3.4.6/ -lpthread -lz
+# set the working directory to the mount point where the data directory is mounted to
+WORKDIR /mnt/
 
-    #&& sed -i 's/-lcfitsio/& -lpthread -lcurl -lbz2 -lz/' makefile
-    # make vpflx
-
-
-# Default command (can be changed depending on the software)
+# Set bash to be the default command
 CMD ["/bin/bash"]

@@ -3,8 +3,8 @@ services:
         build:
             context: .
             dockerfile: Dockerfile
-        image: tansb/vpfit2
-        container_name: vpfit_container2
+        image: tansb/vpfit
+        container_name: vpfit_container
         environment:
             # Sets the `DISPLAY` variable for the container to use the XQuartz
             # display on macOS.
