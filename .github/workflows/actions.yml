@@ -30,7 +30,7 @@ jobs:
 
     # See if VPFIT opens
     - name: Run VPFIT
-      run: vpfit
+      run: docker exec vpfit_container vpfit
 
     # Wait 10 seconds, checks that the container is up, and then stops it.
     - name: Wait briefly then shut down
