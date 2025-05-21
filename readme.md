@@ -17,7 +17,7 @@ container to your actual computer's display. On a mac to allow X11 access:
 
 (a) Open XQuartz and go to Preferences > Security. Make sure "Allow connections from network clients" is enabled.
 
-(b) Also, on your mac run the command ```xhost +``` to allow the Docker container to connect to any X11 server.
+(b) Also, on your computer run the command ```xhost +``` to allow the Docker container to connect to any X11 server.
 
 #### Step 2. Build the docker container
 Docker containers are designed to work and operate in isolation, but when using VPFIT you need an easy way to pass data in and out. Therefore, specify a directory to mount into the container so you can access that data from within the container (and save the reduced files out).
@@ -42,4 +42,9 @@ First check that the X11 forwarding is working correctly by typing ```xeyes``` i
 The container will open directly into your mounted data directory you defined in MY_MOUNTED_DATA_DIR.
 To run vpfit, just type ```vpfit```. For instructions on running VPFIT, see the [user manual written by Bob Carswell](https://www.overleaf.com/read/vbxkcfnfgksr)
 
+If you want to run it in non-interactive mode, I've written a python script which wraps around VPFIT
+and runs it on an input file. From within the container do:
+```bash
+python3 run_vpfit_noninteractive.py <path_to_your_input_file.txt>
+```
 
